@@ -1,14 +1,21 @@
-export default function PlaceTree({ id, placesById }) {
+export default function PlaceTree({ parentId, id, placesById, onComplete }) {
   const place = placesById[id];
   const childIds = place.childIds;
   return (
     <>
       <li>
         {place.title}
+        <button onClick={() => onComplete(parentId, id)}>Complete</button>
         {childIds.length > 0 && (
           <ol>
-            {childIds.map((id) => (
-              <PlaceTree key={id} id={id} placesById={placesById} />
+            {childIds.map((childId) => (
+              <PlaceTree
+                key={childId}
+                id={childId}
+                parentId={id}
+                placesById={placesById}
+                onComplete={onComplete}
+              />
             ))}
           </ol>
         )}
